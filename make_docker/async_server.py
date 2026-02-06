@@ -7,7 +7,6 @@ import os
 import uuid
 
 model_path = os.getenv('MODEL_PATH')
-#model_path = "/mnt/disks/vllm/llama3/Llama-3.1-8B-Instruct/"
 print(f"Model: {model_path}")
 
 engine_args = AsyncEngineArgs(
@@ -16,8 +15,6 @@ engine_args = AsyncEngineArgs(
     tensor_parallel_size=1
 )
 llm = AsyncLLMEngine.from_engine_args(engine_args)
-
-
 
 app = FastAPI() 
 

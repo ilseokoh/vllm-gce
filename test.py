@@ -1,9 +1,6 @@
 import os
 from vllm import LLM, SamplingParams
 
-os.environ["CUDA_VISABLE_DEVICES"] = "0"
-
-
 # 모델 위치
 model_path = "/home/user_id/models/Meta-Llama-3.1-8B-Instruct/"
 
