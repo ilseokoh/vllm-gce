@@ -48,4 +48,5 @@ async def generate_post(request: QueryRequest):
 
             if output.finished:
                 return
+
     return StreamingResponse(stream_response(), media_type="text/plain")
