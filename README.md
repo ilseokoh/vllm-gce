@@ -64,11 +64,121 @@ nvidia-smi
    ```
 
 
-### 2. Python 가상환경 생성 
+### 2. vLLM 테스트 
+
+1. test.py 에서 다운로드한 모델의 위치 변경 
 ```
-git clone https://github.com/ilseokoh/vllm-gce.git
+# 모델 위치
+model_path = "/home/user_id/models/Meta-Llama-3.1-8B-Instruct/"
+
+def main():
+```
+1. test.py 실행
+```
+cd ~ 
 cd vllm-gce
-uv sync
+uv run test.py
+```
+
+**출력 예시**
+```
+INFO 02-06 03:33:17 [utils.py:261] non-default args: {'disable_log_stats': True, 'enforce_eager': True, 'model': '/home/admin_iloh_altostrat_com/models/Meta-Llama-3.1-8B-Instruct'}
+INFO 02-06 03:33:17 [model.py:541] Resolved architecture: LlamaForCausalLM
+INFO 02-06 03:33:17 [model.py:1561] Using max model len 131072
+INFO 02-06 03:33:17 [scheduler.py:226] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 02-06 03:33:17 [vllm.py:624] Asynchronous scheduling is enabled.
+WARNING 02-06 03:33:17 [vllm.py:662] Enforce eager set, overriding optimization level to -O0
+INFO 02-06 03:33:17 [vllm.py:762] Cudagraph is disabled under eager mode
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:18 [core.py:96] Initializing a V1 LLM engine (v0.15.1) with config: model='/home/admin_iloh_altostrat_com/models/Meta-Llama-3.1-8B-Instruct', speculative_config=None, tokenizer='/home/admin_iloh_altostrat_com/models/Meta-Llama-3.1-8B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=131072, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/home/admin_iloh_altostrat_com/models/Meta-Llama-3.1-8B-Instruct, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'splitting_ops': [], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': True}, 'local_cache_dir': None, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:23 [parallel_state.py:1212] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.128.0.16:35995 backend=nccl
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:23 [parallel_state.py:1423] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:24 [gpu_model_runner.py:4033] Starting to load model /home/admin_iloh_altostrat_com/models/Meta-Llama-3.1-8B-Instruct...
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:26 [cuda.py:364] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01<00:04,  1.36s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.42s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:04<00:01,  1.45s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:04<00:00,  1.04s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:04<00:00,  1.18s/it]
+(EngineCore_DP0 pid=10479) 
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:31 [default_loader.py:291] Loading weights took 4.75 seconds
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:32 [gpu_model_runner.py:4130] Model loading took 14.99 GiB memory and 6.720924 seconds
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:33 [gpu_worker.py:356] Available KV cache memory: 19.28 GiB
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:33 [kv_cache_utils.py:1307] GPU KV cache size: 157,936 tokens
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:33 [kv_cache_utils.py:1312] Maximum concurrency for 131,072 tokens per request: 1.20x
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:33 [core.py:272] init engine (profile, create kv cache, warmup model) took 1.71 seconds
+(EngineCore_DP0 pid=10479) WARNING 02-06 03:33:34 [vllm.py:669] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore_DP0 pid=10479) INFO 02-06 03:33:34 [vllm.py:762] Cudagraph is disabled under eager mode
+INFO 02-06 03:33:35 [llm.py:343] Supported tasks: ['generate']
+Adding requests: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 237.34it/s]
+Processed prompts: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:26<00:00, 26.22s/it, est. speed input: 0.76 toks/s, output: 39.06 toks/s]
+ 
+1. 해리포터와 마법왕 (Harry Potter and the Philosopher's Stone)
+   - 해리 포터는 11살 때 부모를 잃고 오일버트 던스에게 입양된다.
+   - 해리는 자신의 정체성을 발견하고, 마법학교인 호그와트魔法학교에 입학한다.
+   - 해리는 친구들인 론과 헤르미온느와 함께 필ософ스의 돌을 찾기 위해 모험을 떠난다.
+
+2. 해리포터와 비밀의 방 (Harry Potter and the Chamber of Secrets)
+   - 해리는 두 번째 학년이 시작되면서 새로운 미스터리가 발생한다.
+   - 해리는 자신이 처음부터 호그와트에서 있었던 것이 아니라는 것을 알게되고, 그 사실을 밝히기 위해 노력한다.
+   - 해리는 친구들과 함께 비밀의 방을 찾아내어, 그 안에 있는 몬스터를 물리친다.
+
+3. 해리포터와 아즈카반의 죄수 (Harry Potter and the Prisoner of Azkaban)
+   - 해리는 세 번째 학년이 시작되면서, 신비한 교사들이 나타나고, 아즈카반의 죄수가 탈출한다.
+   - 해리는 아즈카반의 죄수를 잡아야 하는 임무를 맡는다.
+   - 해리는 친구들과 함께 아즈카반의 죄수를 잡아내고, 그의 진실을 알아낸다.
+
+4. 해리포터와 불사조 기사단 (Harry Potter and the Goblet of Fire)
+   - 해리는 네 번째 학년이 시작되면서, 호그와트에서 대회가 열린다.
+   - 해리는 불사조 기사단의 일원이 되고, 대회에서 우승하지만, 실제로는 다른 사람의 이름으로 참가했다는 사실을 밝힌다.
+   - 해리는 친구들과 함께 대회를 끝내고, 볼드모트의 복귀를 막으려 한다.
+
+5. 해리포터와 아시안의 귀환자 (Harry Potter and the Order of the Phoenix)
+   - 해리는 다섯 번째 학년이 시작되면서, 볼드모트가 다시 활동하기 시작한다.
+   - 해리는 친구들과 함께 볼드모트를 막기 위해 노력한다.
+   - 해리는 Dumbledore의 Army를 만들고, 볼드모트를 막기 위한 계획을 수립한다.
+
+6. 해리포터와 반지의 비밀 (Harry Potter and the Half-Blood Prince)
+   - 해리는 여섯 번째 학년이 시작되면서, 볼드모트가 계속해서 활동한다.
+   - 해리는 볼드모트의 과거를 조사하고, 그의 약점을 알아낸다.
+   - 해리는 친구들과 함께 볼드모트를 막기 위해 노력한다.
+
+7. 해리포터와 죽음의 성물 (Harry Potter and the Deathly Hallows)
+   - 해리는 일곱 번째 학년이 시작되면서, 볼드모트가 마지막으로 등장한다.
+   - 해리는 친구들과 함께 볼드모트를 막기 위해 노력한다.
+   - 해리는 볼드모트를 물리치고, 호그와트의 위기를 극복한다.
+
+해리포터 시리즈는 마법과 사랑, 친구애 대한 이야기로 구성되어 있으며, 어린이와 청소년들에게 많은 영향을 미쳤다. 
+
+해리포터 시리즈는 다음과 같은 요소들을 포함하고 있다.
+
+- 마법과 상상력: 해리포터 시리즈는 마법과 상상력을 통해 이야기를 풀어나간다.
+- 친구애 대한 사랑: 해리포터 시리즈는 친구애 대한 사랑과 동료애를 강조한다.
+- 희생과 용기: 해리포터 시리즈는 희생과 용기를 통하여 이야기를 진행한다.
+- 악과 선: 해리포터 시리즈는 악과 선의 대결을 통해 이야기를 풀어나간다.
+
+해리포터 시리즈는 어린이와 청소년들에게 많은 영향을 미쳤으며, 어른들도 읽어보면 좋습니다. 
+
+해리포터 시리즈는 다음과 같은 장르를 포함하고 있다.
+
+- 판타지
+- 어드벤처
+- 로맨스
+
+해리포터 시리즈는 다음과 같은 수상과 명예를 받았다.
+
+- 뉴욕 타임스 베스트셀러 목록
+- 영국 베스트셀러 목록
+- 미국 베스트셀러 목록
+
+해리포터 시리즈는 다음과 같은 영화화와 애니메이션화가 이루어졌다.
+
+- 해리포터 영화 시리즈
+- 해리포터 애니메이션 시리즈
+
+해리포터 시리즈는 다음과 같은 책으로 구성되어 있다.
+
+- 해리
 ```
 
 
@@ -90,3 +200,7 @@ $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 $ sudo systemctl restart docker
 
 docker run -d --gpus all --shm-size=16G -v /mnt/disks/vllm/llama3:/app/models -e MODEL_PATH="/app/models/Llama-3.1-8B-Instruct/" -p 8080:8080 test_vllm_1
+
+### 3. FastAPI 연동
+
+

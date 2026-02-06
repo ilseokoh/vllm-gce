@@ -5,8 +5,7 @@ os.environ["CUDA_VISABLE_DEVICES"] = "0"
 
 
 # 모델 위치
-# model_path = "/home/xxxjjhhh/my_model/Meta-Llama-3.1-8B-Instruct/"
-model_path = "/mnt/disks/vllm/llama3/Llama-3.1-8B-Instruct/"
+model_path = "/home/user_id/models/Meta-Llama-3.1-8B-Instruct/"
 
 def main():
     llm = LLM(model=model_path, enforce_eager=True, gpu_memory_utilization=0.9, tensor_parallel_size=1)
