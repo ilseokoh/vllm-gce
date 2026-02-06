@@ -6,7 +6,7 @@ from vllm import AsyncEngineArgs, AsyncLLMEngine, SamplingParams
 
 import uuid
 
-model_path = "/mnt/disks/vllm/llama3/Llama-3.1-8B-Instruct/"
+model_path = "/home/user_id/models/Meta-Llama-3.1-8B-Instruct/"
 
 engine_args = AsyncEngineArgs(
     model=model_path, 
@@ -27,7 +27,7 @@ app = FastAPI()
 class QueryRequest(BaseModel):
     query: str
 
-@app.post("/generate")
+@app.post("/generate/")
 async def generate_post(request: QueryRequest):
     request_id = str(uuid.uuid4())
     sent_text = "" 
