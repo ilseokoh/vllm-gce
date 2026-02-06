@@ -203,4 +203,23 @@ docker run -d --gpus all --shm-size=16G -v /mnt/disks/vllm/llama3:/app/models -e
 
 ### 3. FastAPI 연동
 
+1. server.py 에서 model 위치 변경 
+```
+app = FastAPI() 
 
+model_path = "/home/user_id/models/Meta-Llama-3.1-8B-Instruct/"
+llm = LLM(model=model_path, gpu_memory_utilization=0.9,  tensor_parallel_size=1)
+```
+2. server 실행 
+```
+uv run uvicorn server:app --host 0.0.0.0 --port 8080
+```
+3. API 호출 테스트 
+```
+curl -X POST "http://localhost:8080/generate/" -H "Content-Type: application/json" -d '{"query": "해리포터의 줄거리를 한글로 간략히 설명해 주세요."}'
+```
+
+
+### 4. 비동기 치러 (AyncLLMEngine)
+
+1. 
